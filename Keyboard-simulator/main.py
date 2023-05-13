@@ -1,10 +1,11 @@
 import sys
 import display_text
-from PyQt6.QtWidgets import QApplication
 
-# try:
-#     from PyQt6.QtWidgets import QApplication
-# except:
+try:
+    from PyQt6.QtWidgets import QApplication
+except ImportError:
+    import subprocess
+    subprocess.check_call(["pip", "install", "PyQt6"])
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

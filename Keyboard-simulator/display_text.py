@@ -3,6 +3,7 @@ from PyQt6.QtGui import QKeyEvent, QFont, QGuiApplication
 from PyQt6.QtCore import Qt, QEvent
 import keyboard
 import words
+import statistics
 import threading
 
 
@@ -27,7 +28,7 @@ class DisplayText(QWidget):
         # Создание кнопки "Выйти из игры"
         self.button_end = QPushButton("Выйти из игры")
         self.button_end.clicked.connect(self.close)
-        self.button_end.setFixedSize(100, 50)
+        # self.button_end.setFixedSize(100, 50)
         grid.addWidget(self.button_end, 0, 0)
 
         # Создаю элемент интерфейса для отображения счетчика
@@ -51,6 +52,11 @@ class DisplayText(QWidget):
         self.txtInput = QLineEdit(self)
         self.txtInput.textChanged.connect(self.handleInput)
         grid.addWidget(self.txtInput, 3, 0, 1, 14)
+
+        self.button = QPushButton('Посмотреть статистику')
+        self.statistics = statistics.Statistics()
+        self.button.clicked.connect(lambda : self.statistics.setVisible(True))
+        grid.addWidget(self.button, 0, 1, 1, 2)
 
         self.keyboard = keyboard.Keyboard(grid)
         self.keyboard.signal.connect(self.line_edit)

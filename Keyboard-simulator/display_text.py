@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QGridLayout
-from PyQt6.QtGui import QKeyEvent, QFont
+from PyQt6.QtGui import QKeyEvent, QFont, QGuiApplication
 from PyQt6.QtCore import Qt, QEvent
-import main
+import keyboard
 import words
 import threading
 
@@ -26,7 +26,7 @@ class DisplayText(QWidget):
 
         # Создание кнопки "Выйти из игры"
         self.button_end = QPushButton("Выйти из игры")
-        self.button_end.clicked.connect(main.close_all_windows)
+        self.button_end.clicked.connect(self.close)
         self.button_end.setFixedSize(100, 50)
         grid.addWidget(self.button_end, 0, 0)
 
@@ -34,14 +34,14 @@ class DisplayText(QWidget):
         self.counter = QLabel(self)
         self.counter.setText("Набрано очков: 0")
         self.counter.setFont(QFont("Lab Grotesque", 25))
-        grid.addWidget(self.counter, 0, 1)
+        grid.addWidget(self.counter, 0, 12, 1, 2)
         grid.setAlignment(self.counter, Qt.AlignmentFlag.AlignRight)
 
         # Создаем элемент интерфейса для отображения слова
         self.lblWord = QLabel(self)
         self.lblWord.setText(self.word)
         self.lblWord.setFont(QFont("Lab Grotesque", 30))
-        grid.addWidget(self.lblWord, 2, 0, 1, 2)
+        grid.addWidget(self.lblWord, 2, 0, 1, 14)
         grid.setAlignment(self.lblWord, Qt.AlignmentFlag.AlignHCenter)
 
         # Заводим переменную для количества набранных очков
@@ -50,9 +50,19 @@ class DisplayText(QWidget):
         # Создаем элемент интерфейса для ввода символов
         self.txtInput = QLineEdit(self)
         self.txtInput.textChanged.connect(self.handleInput)
-        grid.addWidget(self.txtInput, 3, 0, 1, 2)
+        grid.addWidget(self.txtInput, 3, 0, 1, 14)
 
-        self.setGeometry(270, 200, 1000, 200)
+        self.keyboard = keyboard.Keyboard(grid)
+        self.keyboard.signal.connect(self.line_edit)
+        self.setGeometry(0, 0, 1200, 400)
+        self.center()
+
+    def center(self):
+        geometry = QGuiApplication.primaryScreen().availableGeometry()
+        window_size = self.frameGeometry()
+        x = int((geometry.width() - window_size.width()) / 2)
+        y = int((geometry.height() - window_size.height()) / 2)
+        self.move(x, y)
 
     def line_edit(self, text):
         if text == "backspace":
@@ -76,7 +86,7 @@ class DisplayText(QWidget):
             if len(text) == len(self.word):
                 self.word = self.words.get_word()
                 self.lblWord.setText(self.word)
-                len_current_counter = len(str(self.count_points))
+                len_current_counter = len(self.counter.text().split()[-1])
                 self.change_counter(len_current_counter)
                 self.txtInput.clear()
 
@@ -87,8 +97,7 @@ class DisplayText(QWidget):
             if hasattr(self, 'shift_pressed') and self.shift_pressed:
                 self.process_shifted_key(event)
                 self.shift_pressed = False
-            else:
-                super().keyPressEvent(event)
+        self.keyboard.keyboardKeyPressEvent(event)
 
     def process_shifted_key(self, event):
         text = event.text().upper()

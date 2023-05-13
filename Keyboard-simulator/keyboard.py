@@ -1,25 +1,17 @@
 import PyQt6.QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, \
-    QLineEdit, QWidget, QPushButton, QGridLayout
-import sys
-
+from PyQt6.QtWidgets import QWidget, QPushButton
 import display_text
-
 
 class Keyboard(QWidget):
     signal = PyQt6.QtCore.pyqtSignal(str)
 
-    def __init__(self):
+    def __init__(self, grid):
         super().__init__()
-        self.initUI()
+        self.initUI(grid)
 
-    def initUI(self):
+    def initUI(self, grid):
         self.setStyleSheet('background-color: white;')
-
-        grid = QGridLayout()
-        self.setLayout(grid)
 
         self.buttons = []
         self.rows = [["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
@@ -27,10 +19,9 @@ class Keyboard(QWidget):
                      ["Caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter"],
                      ["Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/"],
                      ["Ctrl", "Alt", " "]]
-
-        y, x = 0, 0
+        y, x = 4, 0
         for row in self.rows:
-            if y == 4:
+            if y == 8:
                 x += 1
             for label in row:
                 button = QPushButton(label)
@@ -48,9 +39,7 @@ class Keyboard(QWidget):
             x = 0
             y += 1
 
-        self.move(200, 500)
-
-    def keyPressEvent(self, event):
+    def keyboardKeyPressEvent(self, event):
         key = event.text()
         for button in self.buttons:
             if button.text() == key:
@@ -73,7 +62,7 @@ class Keyboard(QWidget):
                 button.animateClick()
             if event.key() == Qt.Key.Key_Return and button.text() == "Enter":
                 button.animateClick()
-        self.emit_signal(event.text())
+        self.emit_signal(key)
 
     def emit_signal(self, text):
         self.signal.emit(text)

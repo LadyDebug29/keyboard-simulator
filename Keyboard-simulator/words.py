@@ -10,7 +10,7 @@ class Words:
         self.words = []
 
     def download_words(self):
-        chunk_size = 1024
+        chunk_size = 256
         read_bytes = 0
         file_size = os.path.getsize('english_words')
         splash_screen = loading_screen.SplashScreen()

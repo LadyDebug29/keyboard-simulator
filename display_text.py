@@ -1,7 +1,8 @@
 from PyQt6 import QtCore
 from PyQt6.QtCore import Qt, QEvent, QTimer
 from PyQt6.QtGui import QKeyEvent, QFont, QGuiApplication, QIcon, QPixmap
-from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QGridLayout
+from PyQt6.QtWidgets import QWidget, QLabel,\
+    QLineEdit, QPushButton, QGridLayout
 
 import end_screen
 import keyboard
@@ -120,7 +121,8 @@ class DisplayText(QWidget):
                 self.txtInput.clear()
 
     def keyPressEvent(self, event):
-        if event.modifiers() == (QtCore.Qt.KeyboardModifier.ShiftModifier | QtCore.Qt.KeyboardModifier.AltModifier):
+        if event.modifiers() == (QtCore.Qt.KeyboardModifier.ShiftModifier |
+                                 QtCore.Qt.KeyboardModifier.AltModifier):
             self.keyboard.switch_keyboard_layout()
 
         elif event.modifiers() & Qt.KeyboardModifier.ShiftModifier:

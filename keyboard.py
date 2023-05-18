@@ -33,7 +33,8 @@ class Keyboard(QWidget):
             if button.text() == key:
                 button.animateClick()
 
-            if event.key() == Qt.Key.Key_Backspace and button.text() == "Backspace":
+            if event.key() == Qt.Key.Key_Backspace and \
+                    button.text() == "Backspace":
                 self.emit_signal("backspace")
                 button.animateClick()
                 break
@@ -100,28 +101,38 @@ class Keyboard(QWidget):
 
     def switch_keyboard_layout(self):
         if self.current_keyboard_layout == KeyboardLayout.ENGLISH_LETTERS or \
-                self.current_keyboard_layout == KeyboardLayout.CAPITAL_ENGLISH_LETTERS:
+                self.current_keyboard_layout == \
+                KeyboardLayout.CAPITAL_ENGLISH_LETTERS:
             self.set_keyboard_layout(self.keyboard_layout.russian_letters)
             self.current_keyboard_layout = KeyboardLayout.RUSSIAN_LETTERS
 
         elif self.current_keyboard_layout == KeyboardLayout.RUSSIAN_LETTERS or \
-                self.current_keyboard_layout == KeyboardLayout.CAPITAL_RUSSIAN_LETTERS:
+                self.current_keyboard_layout == \
+                KeyboardLayout.CAPITAL_RUSSIAN_LETTERS:
             self.set_keyboard_layout(self.keyboard_layout.english_letters)
             self.current_keyboard_layout = KeyboardLayout.ENGLISH_LETTERS
 
     def switch_letters_size(self):
         if self.current_keyboard_layout == KeyboardLayout.ENGLISH_LETTERS:
-            self.set_keyboard_layout(self.keyboard_layout.capital_english_letters)
-            self.current_keyboard_layout = KeyboardLayout.CAPITAL_ENGLISH_LETTERS
+            self.set_keyboard_layout(
+                self.keyboard_layout.capital_english_letters)
+            self.current_keyboard_layout = \
+                KeyboardLayout.CAPITAL_ENGLISH_LETTERS
 
-        elif self.current_keyboard_layout == KeyboardLayout.CAPITAL_ENGLISH_LETTERS:
+        elif self.current_keyboard_layout == \
+                KeyboardLayout.CAPITAL_ENGLISH_LETTERS:
             self.set_keyboard_layout(self.keyboard_layout.english_letters)
             self.current_keyboard_layout = KeyboardLayout.ENGLISH_LETTERS
 
         elif self.current_keyboard_layout == KeyboardLayout.RUSSIAN_LETTERS:
-            self.set_keyboard_layout(self.keyboard_layout.capital_russian_letters)
-            self.current_keyboard_layout = KeyboardLayout.CAPITAL_RUSSIAN_LETTERS
+            self.set_keyboard_layout(
+                self.keyboard_layout.capital_russian_letters)
+            self.current_keyboard_layout = \
+                KeyboardLayout.CAPITAL_RUSSIAN_LETTERS
 
-        elif self.current_keyboard_layout == KeyboardLayout.CAPITAL_RUSSIAN_LETTERS:
-            self.set_keyboard_layout(self.keyboard_layout.russian_letters)
-            self.current_keyboard_layout = KeyboardLayout.RUSSIAN_LETTERS
+        elif self.current_keyboard_layout == \
+                KeyboardLayout.CAPITAL_RUSSIAN_LETTERS:
+            self.set_keyboard_layout(
+                self.keyboard_layout.russian_letters)
+            self.current_keyboard_layout = \
+                KeyboardLayout.RUSSIAN_LETTERS

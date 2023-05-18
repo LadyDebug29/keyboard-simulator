@@ -1,2 +1,1 @@
-(env) $ pip freeze > requirements.txt
 PyQT6

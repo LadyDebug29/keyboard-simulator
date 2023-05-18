@@ -43,7 +43,8 @@ class EndScreen(QWidget):
         self.button_main_screen.setFont(QFont("Lab Grotesque", 25))
 
         self.button_start_game.clicked.connect(self.show_game)
-        self.button_statistics.clicked.connect(lambda: statistics.Statistics().setVisible(True))
+        self.button_statistics.clicked.connect(
+            lambda: statistics.Statistics().setVisible(True))
         self.button_main_screen.clicked.connect(self.show_main_screen)
 
         vbox.addWidget(self.name_game)

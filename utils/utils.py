@@ -1,14 +1,11 @@
 import json
 
 
-def readFromJson():
-    with open("utils/statistics.json", 'r') as file:
-        content = file.read()
-        data = json.loads(content)
-        return data
+def readFromJson(path):
+    with open(path, 'r') as file:
+        return json.load(file)
 
 
-def writeToJson(data):
-    with open('utils/statistics.json', 'w') as file:
-        update_data = json.dumps(data)
-        file.write(update_data)
+def writeToJson(path, data):
+    with open(path, 'w') as file:
+        json.dump(data, file, indent=4)

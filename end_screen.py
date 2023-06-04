@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QIcon, QPixmap
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
 
-import display_text
+import player_screen
 import main_screen
 import statistics
 
@@ -59,8 +59,8 @@ class EndScreen(QWidget):
 
     def show_game(self):
         self.close()
-        self.game = display_text.DisplayText()
-        self.game.show()
+        self.game = player_screen.PlayerScreen(False)
+        self.game.start()
 
     def show_main_screen(self):
         self.close()
